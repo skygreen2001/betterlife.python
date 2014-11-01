@@ -5,7 +5,7 @@ from bbtools import *
 class PyBB(cmd.Cmd):
     def __init__(self):
         cmd.Cmd.__init__(self) # initialize the base class
-        self.QUERYDIR = '/Users/pupu/dev/'
+        self.QUERYDIR = '/Users/pupu/工作/'
         self.OUTPUTDIR = '/Users/pupu/python/'
         
         self.prompt="(PyBB)>"
@@ -20,8 +20,12 @@ class PyBB(cmd.Cmd):
         print "退出程序 Quits the program"
     def do_EOF(self, line):
         sys.exit()
+    def help_exit(self):
+        print "退出"
+    def do_exit(self,line):
+        sys.exit()
     def help_walk(self):
-        print "扫描光盘内容 walk cd and export into *.cdc"
+        print "扫描指定查询目录并将所有文件明细 导出到 *.txt"
     def do_walk(self,filename):
         if filename == "":filename = raw_input("输入输出文件名: ")
         print "扫描指定目录内容保存到:'%s%s'" % (self.OUTPUTDIR,filename)
