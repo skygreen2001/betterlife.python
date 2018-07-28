@@ -22,9 +22,10 @@ def bbGrep(filepath,keyword):
                     print line # 打印输出
 
 if __name__ == '__main__':     # this way the module can be
-    #print os.listdir("/Users/pupu")
+    #print os.listdir("/Users/skygreen")
     print sys.argv
     queryDir=sys.argv[1];outputTxtFile=sys.argv[2]
     bbWalker(queryDir,outputTxtFile)
-    #fileWalker("/Users/pupu/dev/eclipse","/Users/pupu/python/output2.txt")
-    
+    #bbWalker("/Users/skygreen/dev/eclipse","/Users/skygreen/python/output2.txt")
+ 
+#  python bbtools.py /Users/skygreen /Users/skygreen/output2.txt   (命令行中运行)    

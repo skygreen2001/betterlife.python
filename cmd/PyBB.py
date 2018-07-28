@@ -2,15 +2,19 @@
 # -*- coding: utf-8 -*-
 import sys, cmd
 from bbtools import *
+
+work_dir = '/Users/skygreen/'
+output_dir = '/Users/skygreen/Workspace/betterlife.python/'
+
 class PyBB(cmd.Cmd):
     def __init__(self):
         cmd.Cmd.__init__(self) # initialize the base class
-        self.QUERYDIR = '/Users/pupu/工作/'
-        self.OUTPUTDIR = '/Users/pupu/python/'
+        self.QUERYDIR = work_dir
+        self.OUTPUTDIR = output_dir
         
         self.prompt="(PyBB)>"
         self.intro = '''PyBB1.0 使用说明:
-    dir 目录名 #指定保存和搜索目录,默认是 "/Users/pupu/dev/"
+    dir 目录名 #指定保存和搜索目录,搜索目录默认是 "/Users/skygreen/",保存目录默认是 "/Users/skygreen/Workspace/betterlife.python/"
     walk 文件名 #指定输出目录文件名,使用 "*.txt" 
     find 关键词 #使用在保存和搜索目录中遍历所有.txt 文件,输出含有关键词的行
     ? #查询

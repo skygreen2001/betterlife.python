@@ -44,7 +44,9 @@ dbnamelist=["minjin","ultrax"]
 workdir="/root/zyp/"
 #workdir="/Users/pupu/python/bak/"
 
-#定时策略 1:指定时间，需设置 hour minute second 2:指定循环时间周期 inteval
+#定时策略
+#    1:指定时间，需设置 hour minute second
+#    2:指定循环时间周期 inteval
 strategy=1
 
 #指定时间 小时 分 秒;默认:05:00:00
