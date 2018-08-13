@@ -1,19 +1,19 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-#定时执行任务
-#准备工作:chmod 0777 db_mysql_timer_bak.py
-#开始:nohup ./db_mysql_timer_bak.py > dbbak.log 2> dbbak.log  &
-#结束:查看 ps -ef | grep db_mysql_timer_bak.py
-#杀死线程:kill pid
+# 定时执行任务
+# 准备工作:chmod 0777 db_mysql_timer_bak.py
+# 开始:nohup ./trip_user_summary_bak.py > dbbak.log 2>&1 & echo $! > run.pid
+# 结束:查看 ps -ef | grep db_mysql_timer_bak.py
+# 杀死线程:kill -9 pid
 
-#参考:
+# 参考:
 #    使用python的sched和Timer执行定时任务:https://gist.github.com/hailxl/1978082
 #    时间处理与定时任务:http://www.pythontab.com/html/2013/pythonjichu_0119/146.html
 #    Python备份数据库:http://www.jb51.net/article/15461.htm
 #    python写的备份mysql自动上传ftp服务器:http://deidara.blog.51cto.com/400447/342687/
 
-#准备工作:
+# 准备工作:
 #    http://bbaobelief.blog.51cto.com/3838275/901598
 #    由于系统默认会查找/usr/bin下的命令，如果这个命令不在这个目录下，当然会找不到命令
 #    1.首先得知道mysqldump命令的完整路径，可以使用find命令查找:find  / -name mysqldump
@@ -25,36 +25,36 @@ import traceback
 from time import gmtime, strftime,localtime
 from threading import Thread, Timer
 
-#config vars
-#路径分割符，*nix用"/" win32用"\\"
+# config vars
+# 路径分割符，*nix用"/" win32用"\\"
 systempathchr="/"
 
-#数据库用户名
+# 数据库用户名
 dbuser="root"
 
-#数据库密码
+# 数据库密码
 dbpwd="q1w2e3r4"
-#dbpwd=""
+# dbpwd=""
 
-#需要备份那些数据库
+# 需要备份那些数据库
 dbnamelist=["minjin","ultrax"]
-#dbnamelist=["bonli","minjin"]
+# dbnamelist=["bonli","minjin"]
 
-#本地备份文件夹
+# 本地备份文件夹
 workdir="/root/zyp/"
 #workdir="/Users/pupu/python/bak/"
 
-#定时策略
+# 定时策略
 #    1:指定时间，需设置 hour minute second
 #    2:指定循环时间周期 inteval
 strategy=1
 
-#指定时间 小时 分 秒;默认:05:00:00
+# 指定时间 小时 分 秒;默认:05:00:00
 hour=5
 minute=0
 second=0
 
-#指定循环时间周期;默认:8小时
+# 指定循环时间周期;默认:8小时
 inteval=8*60*60;
 
 def each_day_time(hour,min,sec,next_day=True):
@@ -107,7 +107,7 @@ def perform_command(inc,cmd):
     for dbname in dbnamelist:  
         dumpdb(dbname)
         
-#定时触发任务        
+# 定时触发任务        
 def timming_interval_task(inc = 60,cmd=""): 
     # enter用来安排某事件的发生时间，从现在起第n秒开始启动 
     schedule.enter(inc, 0, perform_command, (inc,cmd)) 
