@@ -8,15 +8,16 @@
 # [MySQL Connector/Python Developer Guide](https://dev.mysql.com/doc/connector-python/en/)
 # [Python 使用MySQL](https://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/0014320107391860b39da6901ed41a296e574ed37104752000)
 # 安装MySQL驱动:
+#    > sudo easy_install pip             (服务器需先安装Pip)
 #    > sudo -H pip install --upgrade pip
-#    > pip install mysql-connector           (服务器需先安装Pip)
+#    > pip install mysql-connector           
 import sys
 import mysql.connector
 
 dbconfig = {
     'host': '127.0.0.1',
     'user': 'root',
-    'password': 'itaskTour2006',
+    'password': '',
     'database': 'betterlife'
 }
 

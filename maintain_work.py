@@ -38,7 +38,7 @@ try:
     print html
 except urllib2.HTTPError as e:
     if e.code == 502:
-        # os.system(action_exception)
+        os.system(action_exception)
         if (is_bash_file):    
             os.system('chmod -R 755 ./')
             subprocess.call(bash_file)
