@@ -9,28 +9,31 @@
 
 import sys,pyperclip
 
+# 剪贴板 📋 
+text=pyperclip.paste()
+#Separate lines and add stars.
+lines = text.split('\n')
+for i in range(len(lines)): # loop through all indexes for "lines" list
+    lines[i] = '* ' + lines[i] # add star to each string in "lines" list
+text = '\n'.join(lines)
+print(text)
+pyperclip.copy(str(text))
+
 # 设定系统字符集 
 reload(sys)
 sys.setdefaultencoding('utf8')
-
-# 剪贴板 📋 
-pyperclip.copy('skygreen is cool')
-paste=pyperclip.paste()
-print(paste)
-
-if sys.version_info < (3, 0):
-	response = raw_input("input:")
-else:
-	response = input("input:")
-	
-pyperclip.copy('skygreen input:' + response)
-paste=pyperclip.paste()
-print(paste)
-
 # 用其它第三方应用复制文本
 if sys.version_info < (3, 0):
 	response = raw_input("input:")
 else:
 	response = input("input:")
+paste=pyperclip.paste()
+print(paste)
+	
+pyperclip.copy("you input:"+response)
+paste=pyperclip.paste()
+print(paste)
+	
+pyperclip.copy('skygreen is cool')
 paste=pyperclip.paste()
 print(paste)
