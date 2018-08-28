@@ -26,6 +26,16 @@ import this
 
 # [Automate the Boring Stuff with Python](https://automatetheboringstuff.com/)
 import sys,random,copy,pprint
+from os import getcwd
+
+print '\r\n'
+
+print(sys.version)
+
+print '\r\n'
+
+where_am_I = getcwd()
+print where_am_I
 
 print '\r\n'
 
