@@ -10,7 +10,7 @@
 # 安装MySQL驱动:
 #    > sudo easy_install pip             (服务器需先安装Pip)
 #    > sudo -H pip install --upgrade pip
-#    > pip install mysql-connector           
+#    > pip install mysql-connector
 import sys
 import mysql.connector
 
@@ -21,7 +21,7 @@ dbconfig = {
     'database': 'betterlife'
 }
 
-# 设定系统字符集 
+# 设定系统字符集
 reload(sys)
 sys.setdefaultencoding('utf8')
 
@@ -37,7 +37,7 @@ db.set_charset_collation('utf8mb4', 'utf8mb4_general_ci')
 
 #print(db)
 
-# 使用cursor()方法获取操作游标 
+# 使用cursor()方法获取操作游标
 cursor = db.cursor()
 
 # 使用execute方法执行SQL语句

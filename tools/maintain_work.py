@@ -1,6 +1,9 @@
 #!/usr/bin/python
+# -*- coding: UTF-8 -*-
 #coding=utf-8
 
+
+# 目标: 测试指定服务器是否正常运行，如无法访问返回502，会自动重启nginx并发邮件通知管理员
 import urllib2
 import sys, os
 import subprocess
@@ -8,8 +11,6 @@ import subprocess
 import smtplib
 from email.mime.text import MIMEText
 from email.header import Header
-
-# 测试指定服务器是否正常运行，如无法访问返回502，会自动重启nginx并发邮件通知管理员
 
 watch_server     = 'http://www.bb.com/'
 action_exception = 'service nginx stop'
@@ -23,7 +24,7 @@ mail = {
     'is_ssl'   : True,
     'sender'   : 'admin@bb.com',
     'receivers': ['skygreen@sohu.com', 'skygreen2001@dingtalk.com'],  # 接收邮件，可设置为你的QQ邮箱或者其他邮箱
-    
+
     'subject'  : '生产服务器tomcat发生异常',
     'content'  : 'bb tomcat 挂了,需要尽快进行处理！',
     'header': {
@@ -39,26 +40,26 @@ try:
 except urllib2.HTTPError as e:
     if e.code == 502:
         os.system(action_exception)
-        if (is_bash_file):    
+        if (is_bash_file):
             os.system('chmod -R 755 ./')
             subprocess.call(bash_file)
-        
+
         print '关闭 nginx 成功'
         try:
             if (mail['is_ssl']):
                 smtpObj = smtplib.SMTP_SSL()
             else:
                 smtpObj = smtplib.SMTP()
-            
-            smtpObj.connect(mail['host'], mail['port'])    
+
+            smtpObj.connect(mail['host'], mail['port'])
             smtpObj.login(mail['user'],mail['pass'])
-                        
+
             # 三个参数：第一个为文本内容，第二个 plain 设置文本格式，第三个 utf-8 设置编码
             message = MIMEText(mail['content'], 'plain', 'utf-8')
             message['Subject'] = Header(mail['subject'], 'utf-8')
             message['From'] = Header(mail['header']['from'], 'utf-8')   # 发送者
             message['To'] =  Header(mail['header']['to'], 'utf-8')        # 接收者
-            
+
             smtpObj.sendmail(mail["sender"], mail["receivers"], message.as_string())
             print "邮件发送成功"
         except smtplib.SMTPException as e:

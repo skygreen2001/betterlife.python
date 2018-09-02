@@ -2,7 +2,7 @@
 # -*- coding: UTF-8 -*-
 #coding=utf-8
 
-# 正则表达式示例
+# 目标: 正则表达式示例
 import re
 
 # 匹配 Regex 对象

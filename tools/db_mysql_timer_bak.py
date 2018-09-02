@@ -1,7 +1,8 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
+#!/usr/bin/python
+# -*- coding: UTF-8 -*-
+#coding=utf-8
 
-# 定时执行任务
+# 目标: 定时执行数据库备份任务
 # 准备工作:chmod 0777 db_mysql_timer_bak.py
 # 开始:nohup ./trip_user_summary_bak.py > dbbak.log 2>&1 & echo $! > run.pid
 # 结束:查看 ps -ef | grep db_mysql_timer_bak.py
@@ -33,12 +34,11 @@ systempathchr="/"
 dbuser="root"
 
 # 数据库密码
-dbpwd="q1w2e3r4"
+dbpwd=""
 # dbpwd=""
 
 # 需要备份那些数据库
-dbnamelist=["minjin","ultrax"]
-# dbnamelist=["bonli","minjin"]
+dbnamelist=["bb","betterlife"]
 
 # 本地备份文件夹
 workdir="/root/zyp/"
@@ -77,51 +77,51 @@ def dumpdb(dbname):
         timeformat="%Y%m%d"
     else:
         timeformat="%Y%m%d%H%M%S"
-    
+
     sqlvalformat="mysqldump -u%s -p\"%s\" \"%s\" >\"%s\""
-    tarvalformat="tar --directory=\"%s\" -zcf \"%s\" \"%s\""  
+    tarvalformat="tar --directory=\"%s\" -zcf \"%s\" \"%s\""
     nowdate=time.strftime(timeformat)
     #print(nowdate)
     timeF=strftime("%Y%m%d%H%M%S", localtime())
-    dumpfile=os.path.join(workdir,dbname+timeF+".sql.bak")  
-    zipfile=os.path.join(workdir,dbname+nowdate+".tar.gz")  
+    dumpfile=os.path.join(workdir,dbname+timeF+".sql.bak")
+    zipfile=os.path.join(workdir,dbname+nowdate+".tar.gz")
     sqlval=sqlvalformat % (dbuser,dbpwd,dbname,dumpfile)
     if not os.path.isdir(workdir):
         os.mkdir(workdir)
     result=os.system(sqlval)
-    tarval=tarvalformat % (workdir,zipfile,dbname+timeF+".sql.bak")  
-    result=os.system(tarval)  
+    tarval=tarvalformat % (workdir,zipfile,dbname+timeF+".sql.bak")
+    result=os.system(tarval)
     os.remove(dumpfile)
 
 def getfilename(path):
-    pt=path.rfind(systempathchr)  
+    pt=path.rfind(systempathchr)
     return path[pt+1:]
-    
-def perform_command(inc,cmd): 
-    # 安排inc秒后再次运行自己，即周期运行 
+
+def perform_command(inc,cmd):
+    # 安排inc秒后再次运行自己，即周期运行
     schedule.enter(inc, 0, perform_command, (inc,cmd))
     if cmd=="":
         time=strftime("%Y-%m-%d %H:%M:%S", localtime())
         cmd="echo "+time
     os.system(cmd)
-    for dbname in dbnamelist:  
+    for dbname in dbnamelist:
         dumpdb(dbname)
-        
-# 定时触发任务        
-def timming_interval_task(inc = 60,cmd=""): 
-    # enter用来安排某事件的发生时间，从现在起第n秒开始启动 
-    schedule.enter(inc, 0, perform_command, (inc,cmd)) 
-    # 持续运行，直到计划时间队列变成空为止 
+
+# 定时触发任务
+def timming_interval_task(inc = 60,cmd=""):
+    # enter用来安排某事件的发生时间，从现在起第n秒开始启动
+    schedule.enter(inc, 0, perform_command, (inc,cmd))
+    # 持续运行，直到计划时间队列变成空为止
     schedule.run()
 
-def perform_mysql_bak(cmd=""): 
+def perform_mysql_bak(cmd=""):
     if cmd=="":
         time=strftime("%Y-%m-%d %H:%M:%S", localtime())
         cmd="echo 数据库备份时间:"+time
     os.system(cmd)
-    for dbname in dbnamelist:  
+    for dbname in dbnamelist:
         dumpdb(dbname)
-        
+
 class Job(Thread):
     def run(self):
         perform_mysql_bak()
@@ -129,11 +129,11 @@ class Job(Thread):
 def do_mysql_bak():
     job = Job()
     job.start()
-     
-def timming_mysql_bak(hour=05,minute=00,second=00): 
-    # 安排指定时间再次运行自己，即周期运行 
-    schedule.enterabs(each_day_time(hour,minute,second,True), 1, print_time, ()) 
-    # 持续运行，直到计划时间队列变成空为止 
+
+def timming_mysql_bak(hour=05,minute=00,second=00):
+    # 安排指定时间再次运行自己，即周期运行
+    schedule.enterabs(each_day_time(hour,minute,second,True), 1, print_time, ())
+    # 持续运行，直到计划时间队列变成空为止
     schedule.run()
     while(True):
         Timer(0, do_mysql_bak, ()).start()
@@ -145,13 +145,9 @@ def main():
     else:
         #定时执行一次
         timming_interval_task(inteval)
-        
-    
-# 第一个参数确定任务的时间，返回从某个特定的时间到现在经历的秒数 
-# 第二个参数以某种人为的方式衡量时间 
-schedule = sched.scheduler(time.time, time.sleep) 
+
+
+# 第一个参数确定任务的时间，返回从某个特定的时间到现在经历的秒数
+# 第二个参数以某种人为的方式衡量时间
+schedule = sched.scheduler(time.time, time.sleep)
 main()
-
-
-
-

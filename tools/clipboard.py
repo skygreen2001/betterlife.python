@@ -2,6 +2,7 @@
 # -*- coding: UTF-8 -*-
 #coding=utf-8
 
+# 目标: 剪贴板 📋 
 # 安装需导入的模块
 #    > sudo easy_install pip             (服务器需先安装Pip)
 #    > sudo -H pip install --upgrade pip
@@ -9,7 +10,6 @@
 
 import sys,pyperclip
 
-# 剪贴板 📋 
 text=pyperclip.paste()
 #Separate lines and add stars.
 lines = text.split('\n')
@@ -19,7 +19,7 @@ text = '\n'.join(lines)
 print(text)
 pyperclip.copy(str(text))
 
-# 设定系统字符集 
+# 设定系统字符集
 reload(sys)
 sys.setdefaultencoding('utf8')
 # 用其它第三方应用复制文本
@@ -29,11 +29,11 @@ else:
 	response = input("input:")
 paste=pyperclip.paste()
 print(paste)
-	
+
 pyperclip.copy("you input:"+response)
 paste=pyperclip.paste()
 print(paste)
-	
+
 pyperclip.copy('skygreen is cool')
 paste=pyperclip.paste()
 print(paste)
