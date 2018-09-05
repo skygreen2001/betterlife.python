@@ -25,139 +25,27 @@ import this
 # python3 -m http.server 8810 #(py3) 直接在命令行运行
 
 # [Automate the Boring Stuff with Python](https://automatetheboringstuff.com/)
-import sys,random,copy,pprint
-from os import getcwd
 
-print '\r\n'
+import os,sys
+from os import path
 
-print(sys.version)
+print('\r\n')
 
-print '\r\n'
+# 加载子目录下工具包，可以不断扩展主类
+sys.path.append( path.dirname( path.abspath(__file__) ) )
+from tools.common import *
 
-where_am_I = getcwd()
-print where_am_I
+print('\r\n')
 
-print '\r\n'
+# +. 获取导入模块的信息
+print(dir(os))
+print('\r\n')
 
+# +. 排版小技巧
 print('Hello'.rjust(20, '*'))
 print('Hello'.ljust(20, '-'))
 print('Hello'.center(20, '='))
-
-# +. 随机数示例
-def getAnswer(answerNumber):
-	if answerNumber == 1:
-		return 'It is certain'
-	elif answerNumber == 2:
-		return 'It is decidedly so'
-	elif answerNumber == 3:
-		return 'Yes'
-	elif answerNumber == 4:
-		return 'Reply hazy try again'
-	elif answerNumber == 5:
-		return 'Ask again later'
-	elif answerNumber == 6:
-		return 'Concentrate and ask again'
-	elif answerNumber == 7:
-		return 'My reply is no'
-	elif answerNumber == 8:
-		return 'Outlook not so good'
-	elif answerNumber == 9:
-		return 'Very doubtful'
-
-for i in range(9):
-	r = random.randint(1, 9)
-	fortune = getAnswer(r)
-	print(str(r)+":"+fortune)
-
-print '\r\n'
-	
-
-# +. 列表
-spam = ['X', 'Y', 'Z'] * 3; # 列表复制
-print spam;
-
-spam = ['cat', 'bat', 'rat', 'elephant'] 
-del spam[2] # 从列表中删除值
-spam.remove('bat') # 从列表中删除值asd
-
-print spam;
-
-# copy 模块的 copy()和 deepcopy()函数
-spam = ['A', 'B', 'C', 'D']
-cheese = copy.copy(spam)
-cheese[1] = 42
-print spam
-print cheese
-cheese = spam
-cheese[1] = 88
-print spam
-
-# 列表用于循环
-catNames = []
-while True:
-	print('Enter the name of cat ' + str(len(catNames) + 1) + ' (Or enter nothing to stop.):')
-	if sys.version_info < (3, 0):
-		name = raw_input("input:")
-	else:
-		name = input("input:")
-	if name == '':
-		break
-	catNames = catNames + [name] # list concatenation
-catNames.sort() # 用 sort()方法将列表中的值排序
-
-print('The cat names are:')
-for name in catNames:
-	print(' ' + name)
-
-catNames.sort(reverse=True) # 用 sort()方法将列表中的值排序
-print('Confirm again the cat names are:')
-for i in range(len(catNames)):
-	print(str(i) +': ' + catNames[i])
-	
-# 多重赋值技巧
-cat = ['fat', 'black', 'loud']
-size, color, disposition = cat
-print (size + "," + disposition + "," + color)
-	
-print '\r\n';
-
-# +. 字典
-# 漂亮打印
-message = 'It was a bright cold day in April, and the clocks were striking thirteen.'
-count = {}
-for character in message:
-	count.setdefault(character, 0)
-	count[character] = count[character] + 1
-pprint.pprint(count)
-
-print '\r\n';
-	
-# +. Collatz 序列（考拉咨猜想）包含有 递归写法
-def collatz(number):
-	print(number)
-	if number == 1:
-		print 'Collatz Test End'
-		# sys.exit()
-	elif number % 2 == 1:
-		t=3 * number + 1
-		collatz(t)
-	else:
-		t=number // 2
-		collatz(t)
-		
-def collatz_test():
-    print('Enter number:')
-    try:
-        number  = int(input())
-        collatz(number)
-    except ValueError as verror:
-        print('ValueError: You need input digital.')
-    except:
-        print('ValueError: You need input any digital.')
-         
-collatz_test()
-
-print '\r\n'
+print('\r\n')
 
 # +. 用 sys.exit()提前结束程序
 while True:
@@ -169,3 +57,4 @@ while True:
 	if response == 'exit':
 		sys.exit()
 	print('You typed ' + response + '.')
+

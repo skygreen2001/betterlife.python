@@ -18,6 +18,7 @@ import sys,curses,locale
 # pick使用了python curses screen addrstr的方法, 参考: [python curses addrstr中文乱码问题] 解决办法
 locale.setlocale(locale.LC_ALL, '')
 
+# 示例: 获取默认字符集
 print(sys.getdefaultencoding())
 
 # 示例: 控制台字体颜色控制
@@ -30,6 +31,33 @@ reset = '\033[0m'
 print(red + "红色" + reset)
 print(green + "绿色" + reset)
 print(yellow + "黄色" + reset)
+
+# +. Collatz 序列（考拉咨猜想）包含有 递归写法
+def collatz(number):
+	print(number)
+	if number == 1:
+		print('Collatz Test End')
+		# sys.exit()
+	elif number % 2 == 1:
+		t=3 * number + 1
+		collatz(t)
+	else:
+		t=number // 2
+		collatz(t)
+		
+def collatz_test():
+    print('Enter number:')
+    try:
+        number  = int(input())
+        collatz(number)
+    except ValueError as verror:
+        print('ValueError: You need input digital.')
+    except:
+        print('ValueError: You need input any digital.')
+         
+collatz_test()
+
+print('\r\n')
 
 # 示例: 单选
 title = 'Please choose your favorite programming language: '
