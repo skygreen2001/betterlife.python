@@ -13,7 +13,7 @@
 from __future__ import print_function
 from pick import pick
 from pick import Picker
-import sys,curses,locale
+import os,sys,curses,locale
 
 # pick使用了python curses screen addrstr的方法, 参考: [python curses addrstr中文乱码问题] 解决办法
 locale.setlocale(locale.LC_ALL, '')
@@ -116,3 +116,7 @@ def get_description_for_display(option):
 
 option, index = pick(options, title, indicator='=>', options_map_func=get_description_for_display)
 print(option, index)
+
+# +. 获取控制台大小(多少行, 多少列)  [只能在命令行工具里执行]
+# rows, columns = os.popen('stty size', 'r').read().split()
+# print(rows, columns)

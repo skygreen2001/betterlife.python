@@ -41,11 +41,12 @@ print('\r\n')
 print(dir(os))
 print('\r\n')
 
-# +. 排版小技巧
-print('Hello'.rjust(20, '*'))
-print('Hello'.ljust(20, '-'))
-print('Hello'.center(20, '='))
-print('\r\n')
+# +. range
+A = list(range(1,10,1)) # start,stop,step
+B = list(range(9))
+
+print("This is List A:",A)
+print("This is List B:",B)
 
 # +. 用 sys.exit()提前结束程序
 while True:

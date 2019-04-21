@@ -2,10 +2,9 @@
 # -*- coding: UTF-8 -*-
 # coding=utf-8
 
-#目标: 通用方法
+# 目标: 通用方法
 # [python cheatsheet](https://zhuanlan.zhihu.com/p/26459091)
-import os,sys,random,time,copy,pprint
-import string
+import os, sys, random, time, copy, pprint
 from os import getcwd
 from distutils.sysconfig import get_python_lib
 from itertools import product
@@ -41,16 +40,6 @@ print(isinstance("123",(str)))
 print(isinstance("123",(int,bool,float,complex)))
 print(isinstance(123,(int,bool,float,complex)))
 print('\r\n')
-
-# +. 字符串倒置 
-a =  "codementor"
-a = a[::-1]
-print(a)
-
-# +. 字符串首字母变大写
-info = 'ssfef'
-print(info.capitalize())
-print(info.title())
 
 # +. itertools迭代器
 p = product("ABCD", repeat=3)
@@ -137,7 +126,7 @@ for x, y in zip(list1,list2):
     print(x+y)
 
 # 列表内元素相加
-a=[1,2,3] #（数字）
+a=[1, 2, 3] #（数字）
 print(sum(a))
 print('\r\n')
 
@@ -179,12 +168,3 @@ for character in message:
 pprint.pprint(count)
 
 print('\r\n')
-
-# 列举所有字母
-print(string.ascii_uppercase) #所有大写字母
-print(string.ascii_lowercase) #所有小写字母
-print(string.ascii_letters) #所有字母（包括大小写）
-
-# +. 获取控制台大小(多少行, 多少列)  [只能在命令行工具里执行]
-# rows, columns = os.popen('stty size', 'r').read().split()
-# print(rows, columns)
