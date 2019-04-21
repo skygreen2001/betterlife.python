@@ -16,7 +16,7 @@ print('\r\n')
 
 # +. 获取当前路径
 where_am_I = getcwd()
-print where_am_I
+print(where_am_I)
 print('\r\n')
 
 # +. 获取python安装路径
@@ -38,8 +38,8 @@ print('\r\n')
 
 # +. 判断数据类型
 print(isinstance("123",(str)))
-print(isinstance("123",(int,long,float,complex)))
-print(isinstance(123,(int,long,float,complex)))
+print(isinstance("123",(int,bool,float,complex)))
+print(isinstance(123,(int,bool,float,complex)))
 print('\r\n')
 
 # +. 字符串倒置 
@@ -99,8 +99,8 @@ print(spam)
 spam = ['A', 'B', 'C', 'D']
 cheese = copy.copy(spam)
 cheese[1] = 42
-print spam
-print cheese
+print(spam)
+print(cheese)
 cheese = spam
 cheese[1] = 88
 print(spam)

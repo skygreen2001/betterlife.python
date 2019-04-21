@@ -33,7 +33,7 @@ print('\r\n')
 
 # 加载子目录下工具包，可以不断扩展主类
 sys.path.append( path.dirname( path.abspath(__file__) ) )
-from tools.common import *
+from tools.common.common import *
 
 print('\r\n')
 

@@ -4,7 +4,7 @@
 
 #目标: 网络操作
 
-import socket,urllib2
+import socket,urllib.request
 import pprint
 
 # 域名解析为ip
@@ -14,7 +14,7 @@ print(ip)
 
 # 获取服务器版本信息
 sUrl   = 'http://www.qq.com'
-sock   = urllib2.urlopen(sUrl)
+sock   = urllib.request.urlopen(sUrl)
 header = sock.headers
 print(header)
 pp = pprint.PrettyPrinter(depth=6)
