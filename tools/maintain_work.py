@@ -28,8 +28,8 @@ mail = {
     'subject'  : '生产服务器tomcat发生异常',
     'content'  : 'bb tomcat 挂了,需要尽快进行处理！',
     'header': {
-        'from'   : '上海雪橇网络科技有限公司',
-        'to'     : '雪橇科技IT运维组'
+        'from'   : '上海只为更好网络科技有限公司',
+        'to'     : '只为更好IT运维组'
     }
 }
 
