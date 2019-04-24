@@ -2,7 +2,10 @@
 # -*- coding: UTF-8 -*-
 #coding=utf-8
 
-dest_dir = "/Users/skygreen/Workspace/ittrconsole/"
+dest_dir   = "/Users/skygreen/Workspace/ittrconsole/"
+file_read  = dest_dir + "m.txt"
+file_write = dest_dir + "md.txt"
+
 # 目标: 文件操作
 import os, glob
 # 输出一个目录下所有文件名称
@@ -31,10 +34,32 @@ search(dest_dir)
 print(glob.glob(dest_dir + "*.py"))     #返回的是一个列表
 
 
+# +. 读取文件
+f = open(file_read, 'r')
+content = f.read()
+print(content)
+f.close()
 
+f = open(file_read, 'r')
+result = []
+for line in f.readlines():
+    line  = line.strip() # 把末尾的'\n'删掉
+    words = re.split(r' ',line) # 按空格切割
+    id    = words[0]
+    id    =  int(id)
+    result.append(id)
+f.close()
 
+result.sort()
+print(result)
 
+# +. 写文件
+content = ",".join(str(x) for x in result)
+print(content)
 
+f = open(file_write, 'w')
+f.write(content)
+f.close()
 
 
 
