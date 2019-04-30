@@ -4,8 +4,8 @@
 
 # 定时执行任务
 
-# 准备工作:chmod 0777 clean.py
-# 开始:nohup ./clean.py > timer.log 2>&1 & echo $! > run.pid
+# 准备工作:chmod 0777 timer.py
+# 开始:nohup ./timer.py > timer.log 2>&1 & echo $! > run.pid
 # 结束:查看 ps -ef | grep timer.py
 # 杀死线程:kill pid
 
@@ -13,22 +13,26 @@
 # 使用python的sched和Timer执行定时任务:https://gist.github.com/hailxl/1978082
 # 时间处理与定时任务:http://www.pythontab.com/html/2013/pythonjichu_0119/146.html
 # [Install Pip](https://pip.pypa.io/en/stable/installing/)
-# [Book: OReilly.Head.First.Python.2nd.Edition.2016.11.pdf] Chapter 7: Using a Database
-# [Python MySQL](https://www.w3schools.com/python/python_mysql_getstarted.asp)
-# [MySQL Connector/Python Developer Guide](https://dev.mysql.com/doc/connector-python/en/)
-# [Python 使用MySQL](https://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/0014320107391860b39da6901ed41a296e574ed37104752000)
-# 安装MySQL驱动:
+# [Linux服务器CPU、内存、磁盘空间、负载情况查看python脚本](https://yq.aliyun.com/articles/331675)
+# 安装requests:
 #    > sudo -H pip install --upgrade pip
+#    > pip install requests
+#    > pip list
+#
+#    > sudo apt install python3-pip [python3]
+#    > pip3 install requests
+#    > pip3 list
 # [说明] 如果pip安装发生错误，提示locale相关的问题，执行以下操作:
 #    > locale -a
 #    > export LC_ALL=C
 #    [解决pip install时unsupported locale setting错误](http://linfuyan.com/locale_error_unsupported_locale_setting/)
 
-import time, calendar, datetime, os, sched
-from time import gmtime, strftime,localtime
+import sys, os, platform
+import re
+import time, calendar, datetime, sched
+from time import gmtime, strftime, localtime
 from threading import Thread, Timer
-import sys
-
+import requests
 
 # 定时策略
 #    1:指定时间，需设置 hour minute second
@@ -36,7 +40,7 @@ import sys
 strategy = 1
 
 # 指定时间 小时 分 秒;默认:05:00:00
-hour   = 11
+hour   = 9
 minute = 37
 second = 0
 
@@ -49,11 +53,14 @@ inteval = 2 * 60
 # is_tomorrow_start=True
 is_tomorrow_start = False
 
+# 需清理日志所在的路径
+log_dir_clear = "/var/log/msg_server"
+log_dir_clear = "/Users/skygeen/IdeaProjects/MessageService/MessageService/log"
+
 # 设定系统字符集
 if sys.version_info < (3, 0):
     reload(sys)
     sys.setdefaultencoding('utf8')
-
 
 def print_time(name = "定时任务"):
     i = datetime.datetime.now()
@@ -125,10 +132,79 @@ def timer_fixed_action(hour = 5,minute = 00, second = 00):
         Timer(0, do_job, ()).start()
         time.sleep(24 * 60 * 60)
 
+# 查看磁盘空间大小
+def safe_disk():
+
+    diskinfo = os.popen('df -h')
+    #此时打开的diskinfo是一个对象，如果直接打印的话是对象内存地址
+
+    text = diskinfo.read()
+    #要用read（）方法读取后才是文本对象
+
+    # print(text)
+    diskinfo.close()#打印后还需将对象关闭
+
+    for line in text.splitlines():
+        print(line)
+    
+
+    statvfs = os.statvfs('/')
+
+    total_disk_space = statvfs.f_frsize * statvfs.f_blocks
+    free_disk_space = statvfs.f_frsize * statvfs.f_bfree
+    disk_usage = (total_disk_space - free_disk_space) * 100.0 / total_disk_space
+    disk_usage = int(disk_usage)
+    disk_tip = "硬盘空间使用率（最大100%）：" + str(disk_usage)+"%"
+    print(disk_tip)
+    if (disk_usage >=85):
+        print('\033[31m' + "磁盘不足，需要进行清理！" + '\033[0m')
+
+# 清理内存
+def clear_cache():
+    pt = platform.system()
+    if(pt =="Windows"):
+        print ("Windows")
+    elif(pt == "Linux"):
+        os.system("sync; echo 1 > /proc/sys/vm/drop_caches")
+    elif(pt == "Darwin"):
+        print("Mac OS")
+    else:
+        print ("Other System")
+
+# 清理日志文件
+# 只保留7天的日志(包括今天在内)
+def clear_logs():
+    date = strftime("%Y-%m-%d", localtime())
+    # print("logFile." + date + ".log")
+
+    tdate = strftime("%Y%m%d", localtime())
+    # print(tdate)
+    for root,dirs,files in os.walk(log_dir_clear):
+        for file in files:
+            date = ''.join([x for x in file if x.isdigit()])
+            if (date and int(date) <= int(tdate) - 7):
+                os.remove(root + "/" + file)
+                # print(date)
+                # print(root + "/" + file)
+
+# [Requests: HTTP for Humans™](https://2.python-requests.org)
+def visit_http():
+    # r = requests.get('https://api.github.com/events')
+    # print(r.text)
+    r = requests.get("http://open.iciba.com/dsapi/")
+    content = r.json()['content']
+    note = r.json()['note']
+    print(content)
+    print(note)
+
 # 自定义系统任务
 def do_action():
     cmd = "echo 在这里定义需要自定义的任务"
     os.system(cmd)
+    # clear_cache()
+    # clear_logs()
+    safe_disk()
+    visit_http()
 
 def main():
     if strategy==1:

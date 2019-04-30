@@ -1,1 +1,5 @@
 *.pyc
+Pipfile
+Pipfile.lock
+wxpy.pkl
+wxpy_puid.pkl
