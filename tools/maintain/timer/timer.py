@@ -1,8 +1,15 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 # -*- coding: UTF-8 -*-
 #coding=utf-8
 
 # 定时执行任务
+
+# 安装python3 [Ubuntu服务器]
+#   sudo apt update
+#   sudo apt install software-properties-common
+#   sudo add-apt-repository ppa:deadsnakes/ppa
+#   sudo apt update
+#   sudo apt install python3.7
 
 # 准备工作:chmod 0777 timer.py
 # 开始:nohup ./timer.py > timer.log 2>&1 & echo $! > run.pid
