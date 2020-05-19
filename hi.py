@@ -42,7 +42,7 @@ print(dir(os))
 print('\r\n')
 
 # +. range
-A = list(range(1,10,1)) # start,stop,step
+A = list(range(1, 10, 1)) # start,stop,step
 B = list(range(9))
 
 print("This is List A:",A)
