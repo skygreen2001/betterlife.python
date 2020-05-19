@@ -22,6 +22,7 @@
 # [Install Pip](https://pip.pypa.io/en/stable/installing/)
 # [Linux服务器CPU、内存、磁盘空间、负载情况查看python脚本](https://yq.aliyun.com/articles/331675)
 # 安装requests:
+#    > sudo easy_install pip
 #    > sudo -H pip install --upgrade pip
 #    > pip install requests
 #    > pip list
@@ -61,8 +62,15 @@ inteval = 2 * 60
 is_tomorrow_start = False
 
 # 需清理日志所在的路径
-log_dir_clear = "/var/log/msg_server"
-log_dir_clear = "/Users/skygeen/IdeaProjects/MessageService/MessageService/log"
+# log_dir_clear = "/var/log/msg_server"
+# log_dir_clear = "/root/bak/app"
+
+log_dir_clears = [
+    "/root/debug/tomcat9/logs",
+    "/var/log/msg_server"
+    # "/var/log/msg_server"
+    # "/root/bak/app"
+]
 
 # 设定系统字符集
 if sys.version_info < (3, 0):
@@ -184,15 +192,34 @@ def clear_logs():
     date = strftime("%Y-%m-%d", localtime())
     # print("logFile." + date + ".log")
 
-    tdate = strftime("%Y%m%d", localtime())
-    # print(tdate)
-    for root,dirs,files in os.walk(log_dir_clear):
-        for file in files:
-            date = ''.join([x for x in file if x.isdigit()])
-            if (date and int(date) <= int(tdate) - 7):
-                os.remove(root + "/" + file)
-                # print(date)
-                # print(root + "/" + file)
+    # tdate = strftime("%Y%m%d", localtime())
+    # for root,dirs,files in os.walk(log_dir_clear):
+    #     for file in files:
+    #         date = ''.join([x for x in file if x.isdigit()])
+    #         if (date and int(date) <= int(tdate) - 7):
+    #             os.remove(root + "/" + file)
+
+    tdate = time.time()
+    clearTime = 7 * 24 * 60 * 60
+    for log_dir_clear in log_dir_clears:
+        for root, dirs, files in os.walk(log_dir_clear):
+            nameMap = {}
+            # 将所有文件进行分类
+            for file in files:
+                date = ''.join([x for x in file if not(x.isdigit())])
+                # 判断是否存在 不存在设置为【】
+                nameMap.setdefault(date, [])
+                nameMap[date].append(file)
+            if (any(nameMap)):
+                # 遍历多有类型
+                for key in nameMap.keys():
+                    value = nameMap[key]
+                    # 只保留最后七个
+                    if (len(value) > 7):
+                        value.sort()
+                        for file in value[0: (len(value) - 7)]:
+                            os.remove(root + "/" + file)
+                            print(root + "/" + file)
 
 # [Requests: HTTP for Humans™](https://2.python-requests.org)
 def visit_http():
@@ -208,8 +235,8 @@ def visit_http():
 def do_action():
     cmd = "echo 在这里定义需要自定义的任务"
     os.system(cmd)
-    # clear_cache()
-    # clear_logs()
+    clear_cache()
+    clear_logs()
     safe_disk()
     visit_http()
 

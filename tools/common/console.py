@@ -6,6 +6,7 @@
 # [create curses based interactive selection list in the terminal](https://github.com/wong2/pick)
 # [python curses addrstr中文乱码问题](https://blog.csdn.net/whwq2012/article/details/51076857)
 # 安装需导入的模块
+#    > sudo easy_install pip
 #    > sudo pip install pick
 #    > sudo python3 -m pip install --upgrade pip (python3 安装包)
 #    > sudo python3 -m pip install pick (python3 安装包)
