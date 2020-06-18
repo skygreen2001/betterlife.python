@@ -69,8 +69,8 @@ def each_day_time(hour,min,sec,next_day=True):
         struct.tm_isdst))
 
 def print_time(name="机器人"):
-    print name, ":","开始运行",\
-        time.time()," :", time.ctime()
+    print(name, ":","开始运行",\
+        time.time()," :", time.ctime())
 
 def dumpdb(dbname):
     if strategy==1:
@@ -130,7 +130,7 @@ def do_mysql_bak():
     job = Job()
     job.start()
 
-def timming_mysql_bak(hour=05,minute=00,second=00):
+def timming_mysql_bak(hour=5,minute=00,second=00):
     # 安排指定时间再次运行自己，即周期运行
     schedule.enterabs(each_day_time(hour,minute,second,True), 1, print_time, ())
     # 持续运行，直到计划时间队列变成空为止

@@ -45,28 +45,28 @@ cursor.execute("SELECT VERSION()")
 
 # 使用 fetchone() 方法获取一条数据
 data = cursor.fetchone()
-print "Database version : %s " % data
-print "\r\n"
+print("Database version : %s " % data)
+print("\r\n")
 
 cursor.execute('select * from bb_user_user where user_id = %s', ('1',))
 values = cursor.fetchall()
-print values
-print "\r\n"
+print(values)
+print("\r\n")
 
 cursor.execute('select * from bb_core_blog')
 values = cursor.fetchall()
-print values
-print "\r\n"
+print(values)
+print("\r\n")
 
 cursor.execute('select blog_id,blog_name from bb_core_blog')
 for blog_id,blog_name in cursor:
-    print 'blog_id:{}, blog_name:{}'.format(blog_id, blog_name)
-print "\r\n"
+    print('blog_id:{}, blog_name:{}'.format(blog_id, blog_name))
+print("\r\n")
 
 cursor.execute('select blog_id,blog_content from bb_core_blog')
 for blog_id,blog_content in cursor:
-    print 'blog_id:%d, blog_content:%s'%(blog_id, blog_content)
-print "\r\n"
+    print('blog_id:%d, blog_content:%s'%(blog_id, blog_content))
+print("\r\n")
 
 # 关闭Cursor和Connection:
 cursor.close()

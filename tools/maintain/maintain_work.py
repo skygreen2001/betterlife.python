@@ -36,7 +36,7 @@ mail = {
 try:
     response = urllib2.urlopen(watch_server)
     html = response.read()
-    print html
+    print(html)
 except urllib2.HTTPError as e:
     if e.code == 502:
         os.system(action_exception)
@@ -44,7 +44,7 @@ except urllib2.HTTPError as e:
             os.system('chmod -R 755 ./')
             subprocess.call(bash_file)
 
-        print '关闭 nginx 成功'
+        print('关闭 nginx 成功')
         try:
             if (mail['is_ssl']):
                 smtpObj = smtplib.SMTP_SSL()
@@ -61,13 +61,13 @@ except urllib2.HTTPError as e:
             message['To'] =  Header(mail['header']['to'], 'utf-8')        # 接收者
 
             smtpObj.sendmail(mail["sender"], mail["receivers"], message.as_string())
-            print "邮件发送成功"
+            print("邮件发送成功")
         except smtplib.SMTPException as e:
-            print "Error: 无法发送邮件:" + str(e.reason)
+            print("Error: 无法发送邮件:" + str(e.reason))
     else:
-        print '服务端发生其它异常: ' + str(e.reason)
+        print('服务端发生其它异常: ' + str(e.reason))
 except urllib2.URLError as e:
-    print '连接服务器失败.'
-    print '失败原因: ', e.reason
+    print('连接服务器失败.')
+    print('失败原因: ', e.reason)
 else:
-    print  'everything is good'
+    print('everything is good')

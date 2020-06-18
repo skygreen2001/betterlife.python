@@ -31,8 +31,18 @@ from os import path
 
 print('\r\n')
 
+
 # 加载子目录下工具包，可以不断扩展主类
 sys.path.append( path.dirname( path.abspath(__file__) ) )
+
+from tools.common.text import *
+
+# 代码中断退出的写法，多用于调试
+try:
+	os._exit(0)
+except:
+	print('die.')
+
 from tools.common.common import *
 
 print('\r\n')

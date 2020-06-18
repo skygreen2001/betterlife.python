@@ -2,18 +2,19 @@
 # -*- coding: UTF-8 -*-
 #coding=utf-8
 
-dest_dir   = "/Users/skygreen/Workspace/ittrconsole/"
-file_read  = dest_dir + "m.txt"
+dest_dir = "/Users/pupu/Workspace/automate/"
+file_read = dest_dir + "dictionary.txt"
 file_write = dest_dir + "md.txt"
 
 # 目标: 文件操作
 import os, glob
+import re
 # 输出一个目录下所有文件名称
 def search(path):
     export = []
-    for root,dirs,files in os.walk(path):
+    for root, dirs, files in os.walk(path):
         for file in files:
-            print(root + "/" + file)
+            print(root + file)
 
 # def search(path):
 #     if os.path.isdir(path):  #如果是目录
@@ -46,7 +47,7 @@ for line in f.readlines():
     line  = line.strip() # 把末尾的'\n'删掉
     words = re.split(r' ',line) # 按空格切割
     id    = words[0]
-    id    =  int(id)
+    # id    =  int(id)
     result.append(id)
 f.close()
 
