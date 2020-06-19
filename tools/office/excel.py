@@ -73,3 +73,15 @@ print(currentSheet.cell(row=1, column=2))
 print(currentSheet.cell(row=1, column=2).value)
 for i in range(1, 8, 2):
     print(i, currentSheet.cell(row=i, column=2).value)
+
+count_rows = currentSheet.max_row
+count_columns = currentSheet.max_column
+print('总行数:{}, 总列数:{}'.format(count_rows, count_columns))
+
+sheets = tuple(currentSheet['A1':'C3'])
+print(sheets)
+
+for rowOfCellObjects in currentSheet['A1':'C3']:
+    for cellObj in rowOfCellObjects:
+        print(cellObj.coordinate, cellObj.value) 
+    print('--- END OF ROW ---')
