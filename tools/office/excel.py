@@ -43,6 +43,23 @@ path += '/data/example.xlsx'
 print(path)
 # os._exit(0)
 
+# 1.新建工作簿：openpyxl.Workbook()
+workBook = openpyxl.Workbook()
+# 2.在工作簿中新建sheet页：create_sheet()
+sheet = workBook.create_sheet("sheet_name")
+# 3.向表格中写入数据：cell(i，j，value) - -索引从1计数
+sheet = workBook.active # 获得当前活跃的工作页，默认为第一个工作页
+sheet.cell(3, 3, "welcome to betterlife python")  # 向单元格（i，j）第i行第j列写入数据value
+# 注意：行号和列号都从1开始计数，即（1, 1）为第一行第一列
+# 4.保存工作簿：save()
+savepath = os.path.realpath(__file__)
+if (savepath):
+    savepath = os.path.split(savepath)
+    savepath = savepath[0]
+savepath += '/data/newcreate.xlsx'
+workBook.save(savepath)
+
+# 对xlsx文件进行读操作
 wb = openpyxl.load_workbook(path)
 print(type(wb))
 print(wb.get_sheet_names())
